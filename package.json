@@ -1,0 +1,38 @@
+{
+  "name": "agentdraw",
+  "version": "0.1.0",
+  "description": "Excalidraw with WebMCP: a whiteboard an AI agent can read and draw on.",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "homepage": "https://agentdraw.app",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "node --experimental-strip-types scripts/write-llms-txt.mjs && tsc --noEmit && vite build",
+    "preview": "vite preview --port 4173 --strictPort",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint src tests scripts",
+    "e2e": "node scripts/e2e-webmcp.mjs",
+    "deploy": "pnpm build && wrangler deploy"
+  },
+  "dependencies": {
+    "@excalidraw/excalidraw": "0.18.1",
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.2",
+    "oxlint": "1.76.0",
+    "playwright-core": "1.56.1",
+    "typescript": "5.9.3",
+    "vite": "8.0.13",
+    "wrangler": "4.92.0"
+  }
+}

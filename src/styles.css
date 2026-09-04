@@ -1,0 +1,242 @@
+/* AgentDraw: Excalidraw fills the page; the only chrome we add is the agent button in the top bar. */
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+.ad-studio {
+  position: fixed;
+  inset: 0;
+}
+
+.ad-studio .excalidraw {
+  height: 100%;
+}
+
+ /* Same box as Excalidraw's own top-bar buttons (the Library trigger), so the two sit flush. */
+.ad-agent-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: var(--lg-button-size, 2.25rem);
+  padding: 0 0.625rem;
+  border: none;
+  border-radius: var(--border-radius-lg, 0.5rem);
+  background-color: var(--color-surface-low, #f1f0ff);
+  color: var(--color-on-surface, #1b1b1f);
+  box-shadow: 0 0 0 1px var(--color-surface-lowest, #ffffff);
+  font-family: var(--ui-font, system-ui, sans-serif);
+  font-size: 0.75rem;
+  letter-spacing: 0.4px;
+  line-height: 0;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.ad-agent-pill__dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #b5b1a9;
+}
+
+.ad-agent-pill.is-available .ad-agent-pill__dot {
+  background: #2fa36b;
+}
+
+.ad-agent-pill.is-error .ad-agent-pill__dot {
+  background: #dc2626;
+}
+
+.ad-agent-pill__edits {
+  color: var(--color-gray-60, #6b6b6b);
+}
+
+/* Phones have no WebMCP host, and Excalidraw's mobile bar has no room for the agent status. */
+@media (max-width: 640px) {
+  .ad-agent {
+    display: none;
+  }
+}
+
+/* Pill is a button now; the guide card hangs below it. */
+.ad-agent {
+  position: relative;
+}
+
+button.ad-agent-pill:hover,
+.ad-agent-pill[aria-expanded='true'] {
+  background-color: var(--color-surface-mid, #e6e4ff);
+}
+
+.ad-agent-pill.is-available {
+  cursor: default;
+}
+
+.ad-agent-guide {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: min(340px, calc(100vw - 24px));
+  padding: 14px 16px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--dialog-border-color, rgba(0, 0, 0, 0.08));
+  background: var(--island-bg-color, #ffffff);
+  color: var(--text-primary-color, #1b1b1f);
+  box-shadow: var(--shadow-island, 0 4px 16px rgba(0, 0, 0, 0.12));
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: normal;
+  z-index: 20;
+}
+
+.ad-agent-guide p {
+  margin: 0 0 8px;
+}
+
+.ad-agent-guide__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.ad-agent-guide__close {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.ad-agent-guide__close:hover {
+  background: var(--button-hover-bg, rgba(0, 0, 0, 0.06));
+}
+
+.ad-agent-guide__status {
+  color: var(--color-gray-60, #6b6b6b);
+  margin-bottom: 10px;
+}
+
+.ad-agent-guide__lead {
+  margin: 0 0 6px;
+}
+
+.ad-agent-guide__status.is-error {
+  color: #dc2626;
+}
+
+.ad-agent-guide__foot {
+  margin: 10px 0 0;
+  font-size: 11px;
+  color: var(--color-gray-60, #6b6b6b);
+}
+
+.ad-agent-guide a {
+  color: var(--color-primary, #6965db);
+}
+/* Copy buttons, the bootstrap prompt in the guide, and the welcome-screen prompt block. */
+.ad-copy {
+  flex: none;
+  border: 1px solid var(--color-border-outline, #d9d9d9);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.ad-copy:hover {
+  background: var(--button-hover-bg, rgba(0, 0, 0, 0.06));
+}
+
+.ad-agent-guide__bootstrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+  margin: 0 0 8px;
+}
+
+.ad-agent-guide__bootstrap code {
+  display: block;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--color-surface-low, rgba(0, 0, 0, 0.04));
+  font-family: inherit;
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+.ad-welcome__prompt {
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 4px auto 22px;
+  max-width: 440px;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+.ad-welcome__prompt-label {
+  font-size: 13px;
+  color: var(--color-gray-60, #6b6b6b);
+}
+
+.ad-welcome__prompt-text {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--dialog-border-color, rgba(0, 0, 0, 0.08));
+  background: var(--island-bg-color, #ffffff);
+  color: var(--text-primary-color, #1b1b1f);
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.ad-welcome__prompt-note {
+  font-size: 12px;
+  color: var(--color-gray-60, #6b6b6b);
+}
+
+.ad-welcome__prompt-copy {
+  border: 1px solid var(--color-primary, #6965db);
+  background: var(--color-primary, #6965db);
+  color: #ffffff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.ad-welcome__prompt-copy:hover {
+  filter: brightness(1.08);
+}
+
+/* Agent-authored HTML inside an embeddable. */
+.ad-html-embed {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #ffffff;
+}

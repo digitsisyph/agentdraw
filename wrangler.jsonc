@@ -1,0 +1,15 @@
+{
+  // Cloudflare Workers static assets. `pnpm deploy` builds and uploads ./dist.
+  // The custom domains below are created automatically on deploy when the zone is in the account.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "agentdraw",
+  "compatibility_date": "2026-09-01",
+  "routes": [
+    { "pattern": "agentdraw.app", "custom_domain": true },
+    { "pattern": "www.agentdraw.app", "custom_domain": true }
+  ],
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}
